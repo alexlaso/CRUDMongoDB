@@ -48,7 +48,7 @@ public class Main {
         Document documentTres = new Document()
                 .append("nombre", "Antonio")
                 .append("apellidos", "Munguía Arteche")
-                .append("especialidad", Arrays.asList("física, química"))
+                .append("especialidad", Arrays.asList("física", "química"))
                 .append("esTitular", true)
                 .append("esAsociado", false)
                 .append("vehiculo", "Volvo");
@@ -64,7 +64,7 @@ public class Main {
         Document documentCinco = new Document()
                 .append("nombre", "Elena")
                 .append("apellidos", "Hérnandez Serafín")
-                .append("especialidad", Arrays.asList("matemáticas, física"))
+                .append("especialidad", Arrays.asList("matemáticas", "física"))
                 .append("esTitular", true)
                 .append("esAsociado", false)
                 .append("vehiculo", "Seat");
@@ -80,7 +80,7 @@ public class Main {
         Document documentSiete = new Document()
                 .append("nombre", "Paco")
                 .append("apellidos", "Fernandez Garcia")
-                .append("especialidad", Arrays.asList("matemáticas, geología"))
+                .append("especialidad", Arrays.asList("matemáticas", "geología"))
                 .append("esTitular", true)
                 .append("esAsociado", false)
                 .append("vehiculo", "Renault");
@@ -88,7 +88,7 @@ public class Main {
         Document documentOcho = new Document()
                 .append("nombre", "Blanca")
                 .append("apellidos", "Gutierrez Ochoa")
-                .append("especialidad", Arrays.asList("física, química"))
+                .append("especialidad", Arrays.asList("física", "química"))
                 .append("esTitular", true)
                 .append("esAsociado", false)
                 .append("vehiculo", "Renault");
