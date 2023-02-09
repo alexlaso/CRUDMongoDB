@@ -1,14 +1,24 @@
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.bson.Document;
 import com.mongodb.client.AggregateIterable;
 import java.util.Arrays;
+
+import static com.mongodb.client.model.Sorts.ascending;
 
 public class Main {
     public static void main(String[] args){
@@ -23,12 +33,15 @@ public class Main {
 
     insertado(collection);
     borrado(collection);
+    update(collection);
+    agregar(collection);
+    listado(collection);
+    ordenado(collection);
+    primeros(collection);
     }
 
     public static void insertado(MongoCollection<Document> collection){
-
         ArrayList<Document> lista = new ArrayList<Document>();
-
         Document document = new Document()
                 .append("nombre", "María")
                 .append("apellidos", "Suárez Manrique")
@@ -106,5 +119,50 @@ public class Main {
     }
 
     public static void borrado(MongoCollection<Document> collection){
+        /*
+        Opcion 2
+        Bson query = eq("nombre","Antonio");
+        DeleteResult deleteado = collection.deleteOne(query);
+         */
+        DeleteResult deleteado = collection.deleteOne(Filters.eq("nombre","Antonio"));
+        System.out.println("Se ha borrado correctamente: " + deleteado.wasAcknowledged());
+    }
+
+    public static void update(MongoCollection<Document> collection){
+        Bson filtro = Filters.eq("esAsociado",false);
+        Bson accion = Updates.set("esAsociado",true);
+        UpdateResult cambios = collection.updateMany(filtro,accion);
+        System.out.println("Se han actualizado correctamente: " + cambios.getModifiedCount() + " documentos.");
+    }
+
+    public static void agregar(MongoCollection<Document> collection){
+        Bson filtro = Filters.eq("especialidad","biología");
+        Bson cambios = Updates.set("edad",30);
+        UpdateResult actualizasao = collection.updateMany(filtro,cambios);
+        System.out.println("Se ha añadido la edad corectamente a: "+actualizasao.getModifiedCount()+" documentos.");
+    }
+
+    public static void listado(MongoCollection<Document> collection){
+        FindIterable<Document> iterDoc = collection.find();
+        Iterator it = iterDoc.iterator();
+        while (it.hasNext()){
+            System.out.println(it.next());
+        }
+    }
+
+    public static void ordenado(MongoCollection<Document> collection){
+        List<Document> list = new ArrayList<>();
+        collection.find().sort(Sorts.ascending("vehiculo")).into(list);
+        for (Document doc : list){
+            System.out.println(doc.toJson());
+        }
+    }
+
+    public static void primeros(MongoCollection<Document> collection){
+        List<Document> list = new ArrayList<>();
+        collection.find().limit(5).into(list);
+        for(Document doc : list){
+            System.out.println(doc.toJson());
+        }
     }
 }
