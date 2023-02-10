@@ -13,12 +13,8 @@ import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import org.bson.Document;
-import com.mongodb.client.AggregateIterable;
 import java.util.Arrays;
-
-import static com.mongodb.client.model.Sorts.ascending;
 
 public class Main {
     public static void main(String[] args){
