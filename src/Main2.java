@@ -13,8 +13,6 @@ import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.bson.Document;
-import java.util.Arrays;
 
 public class Main2 {
     public static void main(String[] args) {
