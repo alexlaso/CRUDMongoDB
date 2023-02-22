@@ -1,4 +1,5 @@
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -8,20 +9,24 @@ import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
 public class Main2 {
     public static void main(String[] args) {
-        MongoClient mongoClient = new MongoClient(
-                new MongoClientURI(
-                        "mongodb://localhost:27017/"
-                )
+        CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+        MongoClient mongoClient = new MongoClient("localhost", MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build()
         );
-        MongoDatabase database = mongoClient.getDatabase("Profesores");
+        MongoDatabase database = mongoClient.getDatabase("Profesores").withCodecRegistry(pojoCodecRegistry);
         MongoCollection<Profesor> collection = database.getCollection("Coches_Profesores", Profesor.class);
 
 
